@@ -37,15 +37,8 @@ namespace RestaurantBusiness.DAL.Repositories
             var iterator = _container.GetItemLinqQueryable<Restaurant>()
                 .ToFeedIterator();
             var restaurants = new List<Restaurant>();
-
-            while (iterator.HasMoreResults)
-            {
-                foreach (var restaurant in await iterator.ReadNextAsync())
-                {
-                    restaurants.Add(restaurant);
-                }
-            }
-
+            restaurants.AddRange(await iterator.ReadNextAsync());
+            
             return restaurants;
         }
     }
