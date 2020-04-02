@@ -1,39 +1,38 @@
 ﻿using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Linq;
-using System.Linq;
-using Microsoft.Extensions.Options;
-using RestaurantBusiness.DatabaseConfiguration;
-using RestaurantBusiness.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+using RestaurantBusiness.Domain.Models;
+using RestaurantBusiness.Domain.DatabaseConfiguration;
+using RestaurantBusiness.DAL.Interfaces;
+using Microsoft.Extensions.Options;
 
-namespace RestaurantBusiness.Repositories
+namespace RestaurantBusiness.DAL.Repositories
 {
-    public class RestaurantRepository
+    public class RestaurantRepository : IRepository<Restaurant>
     {
         private readonly CosmosClient _client;
         private readonly Database _database;
         private readonly Container _container;
 
-        public RestaurantRepository(IOptions<CosmosDbSettings> options)
+        public RestaurantRepository(IOptions<CosmosDbSettings> settings)
         {
-            _client = new CosmosClient(options.Value.EndpointUri, options.Value.PrimaryKey);
-            _database = _client.GetDatabase(options.Value.DatabaseId);
+            _client = new CosmosClient(settings.Value.EndpointUri, settings.Value.PrimaryKey);
+            _database = _client.GetDatabase(settings.Value.DatabaseId);
             _container = _database.GetContainer("restaurants");
         }
 
-        public async Task CreateRestaurantAsync(Restaurant restaurant)
+        public async Task CreateItemAsync(Restaurant item)
         {
-            await _container.CreateItemAsync(restaurant);
+            await _container.CreateItemAsync(item);
         }
 
-        public async Task<Restaurant> GetRestaurantAsync(string id)
+        public async Task<Restaurant> GetItemAsync(string id)
         {
             return await _container.ReadItemAsync<Restaurant>(id, new PartitionKey("/country"));
         }
 
-        public async Task<IEnumerable<Restaurant>> GetAllRestaurantsAsync()
+        public async Task<IEnumerable<Restaurant>> GetAllItemsAsync()
         {
             var iterator = _container.GetItemLinqQueryable<Restaurant>()
                 .ToFeedIterator();
@@ -41,7 +40,7 @@ namespace RestaurantBusiness.Repositories
 
             while (iterator.HasMoreResults)
             {
-                foreach(var restaurant in await iterator.ReadNextAsync())
+                foreach (var restaurant in await iterator.ReadNextAsync())
                 {
                     restaurants.Add(restaurant);
                 }

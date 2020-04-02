@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RestaurantBusiness.DatabaseConfiguration;
+using RestaurantBusiness.DAL.Interfaces;
+using RestaurantBusiness.DAL.Repositories;
+using RestaurantBusiness.Domain.DatabaseConfiguration;
+using RestaurantBusiness.Domain.Models;
 
-namespace RestaurantBusiness
+namespace RestaurantBusiness.Web
 {
     public class Startup
     {
@@ -18,8 +20,9 @@ namespace RestaurantBusiness
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
             services.Configure<CosmosDbSettings>(Configuration.GetSection(nameof(CosmosDbSettings)));
+            services.AddTransient<IRepository<Restaurant>, RestaurantRepository>();
+            services.AddMvc();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

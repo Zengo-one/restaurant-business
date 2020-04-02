@@ -4,17 +4,23 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <StartupObject />
+    <AssemblyName>RestaurantBusiness.Web</AssemblyName>
+    <RootNamespace>RestaurantBusiness.Web</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.7.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RestaurantBusiness.DAL\RestaurantBusiness.DAL.csproj" />
+    <ProjectReference Include="..\RestaurantBusiness.Domain\RestaurantBusiness.Domain.csproj" />
   </ItemGroup>
 
 </Project>

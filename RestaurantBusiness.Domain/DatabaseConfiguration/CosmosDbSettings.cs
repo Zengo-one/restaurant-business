@@ -1,4 +1,4 @@
-﻿namespace RestaurantBusiness.DatabaseConfiguration
+﻿namespace RestaurantBusiness.Domain.DatabaseConfiguration
 {
     public class CosmosDbSettings
     {
