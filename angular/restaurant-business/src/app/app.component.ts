@@ -19,16 +19,8 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.restaurants = [
-      new Restaurant
-      ('1', 'resta', 'Kosmichna 25, Kharkiv', 'Ukraine', 
-        [new Food('soup', 10.50, 
-          [new Ingredient('mushrooms', '50g'), new Ingredient('carrot', '30g')])]),
-      new Restaurant
-      ('2', 'dolche', 'Pushkina 1, Kharkiv', 'Ukraine', 
-        [new Food('pizza with pineapples', 8, 
-          [new Ingredient('pineapples', '50g'), new Ingredient('meat', '60g')])]),   
-    ];
-    //this.restaurantService.getAllRestaurants();
+    this.restaurantService.getAllRestaurants().subscribe(
+      restaurants => this.restaurants = restaurants
+      );
   }  
 }
