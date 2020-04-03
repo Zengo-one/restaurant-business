@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace RestaurantBusiness.Models
+namespace RestaurantBusiness.Domain.Models
 {
     public class Restaurant
     {

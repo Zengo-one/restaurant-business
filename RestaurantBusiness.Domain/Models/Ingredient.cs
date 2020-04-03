@@ -1,4 +1,4 @@
-﻿namespace RestaurantBusiness.Models
+﻿namespace RestaurantBusiness.Domain.Models
 {
     public class Ingredient
     {
