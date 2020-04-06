@@ -15,8 +15,10 @@ export class RestaurantService {
     }
 
     public getAllRestaurants(): Observable<Restaurant[]> {
-        var restaurants = this.httpClient.get<Restaurant[]>(ApiSettings.API_ROOT_PATH + ApiSettings.RESTAURANT_PATH);
-        
-        return restaurants;
+        return this.httpClient.get<Restaurant[]>(ApiSettings.API_ROOT_PATH + ApiSettings.RESTAURANT_PATH);
+    }
+
+    public postRestaurant(restaurant: Restaurant) {
+        return this.httpClient.post<any>(ApiSettings.API_ROOT_PATH + ApiSettings.RESTAURANT_PATH, restaurant);
     }
 }

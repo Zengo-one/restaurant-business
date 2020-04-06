@@ -1,0 +1,25 @@
+<button (click)="onCreateRestaurantClick()">Add new restaurant</button>
+
+<ul>
+    <li *ngFor='let restaurant of restaurants'>
+      <p><b>ID: </b>{{restaurant.id}}</p>
+      <p><b>Name: </b>{{restaurant.name}}</p>
+      <p><b>Address: </b>{{restaurant.address}}</p>
+      <p><b>Country: </b>{{restaurant.country}}</p>
+      <p><b>Menu: </b></p>
+      <ul>
+        <li *ngFor='let food of restaurant.menu'>
+          <p><b>Name: </b>{{food.name}}</p>
+          <p><b>Cost: </b>{{food.cost}}$</p>
+          <p><b>Ingredients: </b></p>
+          <ul>
+            <li *ngFor='let ingredient of food.ingredients'>
+              <p><b>Name: </b>{{ingredient.name}}</p>
+              <p><b>Amount: </b>{{ingredient.amount}}</p>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <br />
+    </li>
+  </ul>

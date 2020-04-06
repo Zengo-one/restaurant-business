@@ -6,6 +6,7 @@ using RestaurantBusiness.Domain.Models;
 using RestaurantBusiness.Domain.DatabaseConfiguration;
 using RestaurantBusiness.DAL.Interfaces;
 using Microsoft.Extensions.Options;
+using System;
 
 namespace RestaurantBusiness.DAL.Repositories
 {
@@ -24,6 +25,7 @@ namespace RestaurantBusiness.DAL.Repositories
 
         public async Task CreateItemAsync(Restaurant item)
         {
+            item.Id = Guid.NewGuid().ToString();
             await _container.CreateItemAsync(item);
         }
 
