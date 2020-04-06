@@ -1,11 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using RestaurantBusiness.Domain.Models;
 using System.Collections.Generic;
 
-namespace RestaurantBusiness.Domain.Models
+namespace RestaurantBusiness.BLL.DTO
 {
-    public class Restaurant
+    public class RestaurantDto
     {
-        [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         public string Name { get; set; }

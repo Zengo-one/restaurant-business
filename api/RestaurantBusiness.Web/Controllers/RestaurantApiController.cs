@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RestaurantBusiness.DAL.Interfaces;
-using RestaurantBusiness.Domain.Models;
+using RestaurantBusiness.BLL.DTO;
+using RestaurantBusiness.BLL.Interfaces;
 using System.Threading.Tasks;
 
 namespace RestaurantBusiness.Web.Controllers
@@ -9,17 +9,17 @@ namespace RestaurantBusiness.Web.Controllers
     [ApiController]
     public class RestaurantApiController : ControllerBase
     {
-        private readonly IRepository<Restaurant> _restaurantRepository;
+        private readonly IRestaurantService _restaurantService;
 
-        public RestaurantApiController(IRepository<Restaurant> restaurantRepository)
+        public RestaurantApiController(IRestaurantService restaurantService)
         {
-            _restaurantRepository = restaurantRepository;
+            _restaurantService = restaurantService;
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateRestaurant(Restaurant restaurant)
+        public async Task<IActionResult> CreateRestaurant([FromBody]RestaurantDto restaurant)
         {
-            await _restaurantRepository.CreateItemAsync(restaurant);
+            await _restaurantService.CreateRestaurant(restaurant);
 
             return Ok();
         }
@@ -27,7 +27,7 @@ namespace RestaurantBusiness.Web.Controllers
         [HttpGet("id")]
         public async Task<IActionResult> GetRestaurant(string id)
         {
-            var restaurant = await _restaurantRepository.GetItemAsync(id);
+            var restaurant = await _restaurantService.GetRestaurant(id);
 
             return Ok(restaurant);
         }
@@ -35,7 +35,7 @@ namespace RestaurantBusiness.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllRestaurants()
         {
-            var restaurants = await _restaurantRepository.GetAllItemsAsync();
+            var restaurants = await _restaurantService.GetRestaurants();
 
             return Ok(restaurants);
         }

@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantBusiness.Domain",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantBusiness.Web", "RestaurantBusiness.Web\RestaurantBusiness.Web.csproj", "{6A6F3526-56A0-4A51-B9CB-20C4BB2C779F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantBusiness.BLL", "RestaurantBusiness.BLL\RestaurantBusiness.BLL.csproj", "{F2AAEB32-6D14-4A0E-A6D3-6122F7BB5178}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantBusiness.Infrastructure", "RestaurantBusiness.Infrastructure\RestaurantBusiness.Infrastructure.csproj", "{DE51CE5B-EE4C-4FAA-90E4-DB64C40FF339}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{6A6F3526-56A0-4A51-B9CB-20C4BB2C779F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A6F3526-56A0-4A51-B9CB-20C4BB2C779F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A6F3526-56A0-4A51-B9CB-20C4BB2C779F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2AAEB32-6D14-4A0E-A6D3-6122F7BB5178}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2AAEB32-6D14-4A0E-A6D3-6122F7BB5178}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2AAEB32-6D14-4A0E-A6D3-6122F7BB5178}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2AAEB32-6D14-4A0E-A6D3-6122F7BB5178}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE51CE5B-EE4C-4FAA-90E4-DB64C40FF339}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE51CE5B-EE4C-4FAA-90E4-DB64C40FF339}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE51CE5B-EE4C-4FAA-90E4-DB64C40FF339}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE51CE5B-EE4C-4FAA-90E4-DB64C40FF339}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
