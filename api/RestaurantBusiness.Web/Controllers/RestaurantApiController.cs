@@ -17,7 +17,7 @@ namespace RestaurantBusiness.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateRestaurant(Restaurant restaurant)
+        public async Task<IActionResult> CreateRestaurant([FromBody]Restaurant restaurant)
         {
             await _restaurantRepository.CreateItemAsync(restaurant);
 

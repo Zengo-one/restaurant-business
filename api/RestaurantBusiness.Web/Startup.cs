@@ -22,6 +22,15 @@ namespace RestaurantBusiness.Web
         {
             services.Configure<CosmosDbSettings>(Configuration.GetSection(nameof(CosmosDbSettings)));
             services.AddTransient<IRepository<Restaurant>, RestaurantRepository>();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("Any policy", policy =>
+                {
+                    policy.AllowAnyHeader();
+                    policy.AllowAnyMethod();
+                    policy.AllowAnyOrigin();
+                });
+            });
             services.AddMvc();
         }
 
@@ -32,6 +41,7 @@ namespace RestaurantBusiness.Web
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors("Any policy");
             app.UseMvc();
         }
     }
