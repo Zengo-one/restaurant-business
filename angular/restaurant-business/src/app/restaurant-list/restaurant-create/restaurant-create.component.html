@@ -1,0 +1,37 @@
+<div>
+    <h1>New restaurant</h1>
+    <label for="newRestaurant.name">Name</label>
+    <input type="text" [(ngModel)]="newRestaurant.name">
+
+    <label for="newRestaurant.address">Address</label>
+    <input type="text" [(ngModel)]="newRestaurant.address">
+
+    <label for="newRestaurant.country">Country</label>
+    <input type="text" [(ngModel)]="newRestaurant.country">
+
+    <button (click)="onCreateRestaurant()">Create restaurant</button>
+</div>
+
+<div>
+    <h2>New food</h2>
+
+    <label for="newFood.name">Name</label>
+    <input type="text" [(ngModel)]="newFood.name">
+
+    <label for="newFood.cost">Cost</label>
+    <input type="number" [(ngModel)]="newFood.cost">
+
+    <button (click)="onCreateFood()">Create new food</button>
+</div>
+
+<div>
+    <h3>New ingredient</h3>
+
+    <label for="newIngredient.name">Name</label>
+    <input type="text" [(ngModel)]="newIngredient.name">
+
+    <label for="newIngredient.amount">Amount</label>
+    <input type="text" [(ngModel)]="newIngredient.amount">
+    
+    <button (click)="onCreateIngredient()">Add ingredient</button>
+</div>
