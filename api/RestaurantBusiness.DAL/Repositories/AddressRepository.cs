@@ -35,7 +35,7 @@ namespace RestaurantBusiness.DAL.Repositories
         {
             foreach(var item in items)
             {
-                await _addressContainer.CreateItemAsync(item);
+                await _addressContainer.CreateItemAsync(item, new PartitionKey(item.Country));
             }
         }
 
@@ -55,7 +55,7 @@ namespace RestaurantBusiness.DAL.Repositories
 
         public async Task<Address> GetItemAsync(string id)
         {
-            return await _addressContainer.ReadItemAsync<Address>(id, new PartitionKey());
+            return await _addressContainer.ReadItemAsync<Address>(id, new PartitionKey("Ukraine"));
         }
     }
 }

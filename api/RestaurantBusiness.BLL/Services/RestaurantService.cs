@@ -13,15 +13,18 @@ namespace RestaurantBusiness.BLL.Services
     {
         private readonly IRepository<Restaurant> _restaurantRepository;
         private readonly IRepository<Food> _foodRepository;
+        private readonly IRepository<Address> _addressRepository;
         private readonly IMapper _mapper;
 
         public RestaurantService(
             IRepository<Restaurant> restaurantRepository,
             IRepository<Food> foodRepository,
+            IRepository<Address> addressRepository,
             IMapper mapper)
         {
             _restaurantRepository = restaurantRepository;
             _foodRepository = foodRepository;
+            _addressRepository = addressRepository;
             _mapper = mapper;
         }
 
@@ -49,12 +52,14 @@ namespace RestaurantBusiness.BLL.Services
         public async Task<IEnumerable<RestaurantDto>> GetRestaurants()
         {
             var restaurants = await _restaurantRepository.GetAllItemsAsync(null);
-            var restaurantDtos = _mapper.Map<IEnumerable<RestaurantDto>>(restaurants);
-
-            foreach(var restaurant in restaurantDtos)
+            var restaurantDtos = new List<RestaurantDto>();
+            foreach(var restaurant in restaurants)
             {
-                restaurant.Menu = new List<Food>();
-                restaurant.Menu.AddRange(await _foodRepository.GetAllItemsAsync(f => f.RestaurantId == restaurant.Id));
+                var restaurantDto = _mapper.Map<RestaurantDto>(restaurant);
+                restaurantDto.Menu = new List<Food>();
+                restaurantDto.Menu.AddRange(await _foodRepository.GetAllItemsAsync(f => f.RestaurantId == restaurant.Id));
+                restaurantDto.Address = await _addressRepository.GetItemAsync(restaurant.AddressId);
+                restaurantDtos.Add(restaurantDto);
             }
 
             return restaurantDtos;

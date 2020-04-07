@@ -28,6 +28,7 @@ export class RestaurantCreateComponent implements OnInit {
   ngOnInit(): void {
     this.newRestaurant = new Restaurant();
     this.newRestaurant.menu = [];
+    this.newRestaurant.address = new Address();
     this.newFood = new Food();
     this.newFood.ingredients = [];
     this.newIngredient = new Ingredient();

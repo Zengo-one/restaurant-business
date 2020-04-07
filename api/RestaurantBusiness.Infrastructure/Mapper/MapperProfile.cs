@@ -9,7 +9,9 @@ namespace RestaurantBusiness.Infrastructure.Mapper
         public MapperProfile()
         {
             CreateMap<Restaurant, RestaurantDto>()
-                .ReverseMap();
+                .ReverseMap()
+                .ForMember(restaurant => restaurant.AddressId, opt => opt
+                .MapFrom(restaurantDto => restaurantDto.Address.Id));
         }
     }
 }

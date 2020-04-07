@@ -9,9 +9,7 @@ namespace RestaurantBusiness.BLL.DTO
 
         public string Name { get; set; }
 
-        public string AddressId { get; set; }
-
-        public string Country { get; set; }
+        public Address Address { get; set; }
 
         public List<Food> Menu { get; set; }
     }
