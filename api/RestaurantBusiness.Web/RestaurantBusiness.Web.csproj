@@ -19,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RestaurantBusiness.DAL\RestaurantBusiness.DAL.csproj" />
     <ProjectReference Include="..\RestaurantBusiness.Domain\RestaurantBusiness.Domain.csproj" />
     <ProjectReference Include="..\RestaurantBusiness.Infrastructure\RestaurantBusiness.Infrastructure.csproj" />
   </ItemGroup>

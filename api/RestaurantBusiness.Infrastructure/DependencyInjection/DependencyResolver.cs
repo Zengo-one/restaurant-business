@@ -14,9 +14,11 @@ namespace RestaurantBusiness.Infrastructure.DependencyInjection
             // Repositories
             services.AddTransient<IRepository<Restaurant>, RestaurantRepository>();
             services.AddTransient<IRepository<Food>, FoodRepository>();
+            services.AddTransient<IRepository<Address>, AddressRepository>();
 
             // Services
             services.AddTransient<IRestaurantService, RestaurantService>();
+            services.AddTransient<IAddressService, AddressService>();
         }
     }
 }

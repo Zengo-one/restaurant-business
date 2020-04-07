@@ -9,9 +9,7 @@ import { ApiSettings } from 'src/api-settings';
     providedIn: 'root'
 })
 export class RestaurantService {
-    private httpClient: HttpClient;
-    constructor(httpClient: HttpClient){
-        this.httpClient = httpClient;
+    constructor(private httpClient: HttpClient) {
     }
 
     public getAllRestaurants(): Observable<Restaurant[]> {
