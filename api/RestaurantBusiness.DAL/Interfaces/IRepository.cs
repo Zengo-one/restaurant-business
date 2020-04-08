@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace RestaurantBusiness.DAL.Interfaces
@@ -7,8 +9,10 @@ namespace RestaurantBusiness.DAL.Interfaces
     {
         Task CreateItemAsync(TItem item);
 
-        Task<TItem> GetItemAsync(string id);
+        Task CreateSeveralItemsAsync(IEnumerable<TItem> items);
 
-        Task<IEnumerable<TItem>> GetAllItemsAsync();
+        Task<TItem> GetItemAsync(string id, string partitionKey);
+
+        Task<IEnumerable<TItem>> GetAllItemsAsync(Expression<Func<TItem, bool>> filter = null);
     }
 }

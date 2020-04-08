@@ -7,41 +7,51 @@ using RestaurantBusiness.Domain.DatabaseConfiguration;
 using RestaurantBusiness.DAL.Interfaces;
 using Microsoft.Extensions.Options;
 using System;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace RestaurantBusiness.DAL.Repositories
 {
     public class RestaurantRepository : IRepository<Restaurant>
     {
-        private readonly CosmosClient _client;
-        private readonly Database _database;
-        private readonly Container _container;
+        private readonly Container _restaurantsContainer;
 
-        public RestaurantRepository(IOptions<CosmosDbSettings> settings)
+        public RestaurantRepository(CosmosClient client, IOptions<CosmosDatabaseSettings> settings)
         {
-            _client = new CosmosClient(settings.Value.EndpointUri, settings.Value.PrimaryKey);
-            _database = _client.GetDatabase(settings.Value.DatabaseId);
-            _container = _database.GetContainer("restaurants");
+            _restaurantsContainer = client.GetContainer(settings.Value.DatabaseId, "restaurants");
         }
 
         public async Task CreateItemAsync(Restaurant item)
         {
-            item.Id = Guid.NewGuid().ToString();
-            await _container.CreateItemAsync(item);
+            await _restaurantsContainer.CreateItemAsync(item, new PartitionKey(item.Name));
         }
 
-        public async Task<Restaurant> GetItemAsync(string id)
+        public async Task<Restaurant> GetItemAsync(string id, string partitionKey)
         {
-            return await _container.ReadItemAsync<Restaurant>(id, new PartitionKey("/country"));
+            return await _restaurantsContainer.ReadItemAsync<Restaurant>(id, new PartitionKey(partitionKey));
         }
 
-        public async Task<IEnumerable<Restaurant>> GetAllItemsAsync()
+        public async Task<IEnumerable<Restaurant>> GetAllItemsAsync(Expression<Func<Restaurant, bool>> filter = null)
         {
-            var iterator = _container.GetItemLinqQueryable<Restaurant>()
-                .ToFeedIterator();
+            var restaurantQueryable = _restaurantsContainer.GetItemLinqQueryable<Restaurant>().AsQueryable();
+
+            if(filter != null)
+            {
+                restaurantQueryable = restaurantQueryable.Where(filter);
+            }
+
             var restaurants = new List<Restaurant>();
-            restaurants.AddRange(await iterator.ReadNextAsync());
-            
+            restaurants.AddRange(await restaurantQueryable.ToFeedIterator().ReadNextAsync());
+
             return restaurants;
+        }
+
+        public async Task CreateSeveralItemsAsync(IEnumerable<Restaurant> items)
+        {
+            await Task.WhenAll(items.Select(async restaurant =>
+            {
+                await _restaurantsContainer.CreateItemAsync(restaurant);
+            }));
         }
     }
 }

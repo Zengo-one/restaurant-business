@@ -4,8 +4,8 @@
     <li *ngFor='let restaurant of restaurants'>
       <p><b>ID: </b>{{restaurant.id}}</p>
       <p><b>Name: </b>{{restaurant.name}}</p>
-      <p><b>Address: </b>{{restaurant.address}}</p>
-      <p><b>Country: </b>{{restaurant.country}}</p>
+      <p><b>Address: </b>{{restaurant.address.name}}</p>
+      <p><b>Country: </b>{{restaurant.address.country}}</p>
       <p><b>Menu: </b></p>
       <ul>
         <li *ngFor='let food of restaurant.menu'>

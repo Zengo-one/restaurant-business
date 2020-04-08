@@ -9,13 +9,11 @@ import { ApiSettings } from 'src/api-settings';
     providedIn: 'root'
 })
 export class RestaurantService {
-    private httpClient: HttpClient;
-    constructor(httpClient: HttpClient){
-        this.httpClient = httpClient;
+    constructor(private httpClient: HttpClient) {
     }
 
-    public getAllRestaurants(): Observable<Restaurant[]> {
-        return this.httpClient.get<Restaurant[]>(ApiSettings.API_ROOT_PATH + ApiSettings.RESTAURANT_PATH);
+    public getAllRestaurants(country: string): Observable<Restaurant[]> {
+        return this.httpClient.get<Restaurant[]>(ApiSettings.API_ROOT_PATH + ApiSettings.RESTAURANT_PATH + country);
     }
 
     public postRestaurant(restaurant: Restaurant) {

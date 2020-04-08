@@ -29,3 +29,4 @@ bld/
 *.vsp
 *.vspx
 *.sap
+/angular/restaurant-business/node_modules

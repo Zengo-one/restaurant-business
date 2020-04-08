@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RestaurantBusiness.DAL.Interfaces;
-using RestaurantBusiness.DAL.Repositories;
-using RestaurantBusiness.Domain.DatabaseConfiguration;
-using RestaurantBusiness.Domain.Models;
+using RestaurantBusiness.Infrastructure.Configuration;
+using RestaurantBusiness.Infrastructure.DependencyInjection;
+using RestaurantBusiness.Infrastructure.Mapper;
+using RestaurantBusiness.Infrastructure.Services;
 
 namespace RestaurantBusiness.Web
 {
@@ -20,18 +20,10 @@ namespace RestaurantBusiness.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<CosmosDbSettings>(Configuration.GetSection(nameof(CosmosDbSettings)));
-            services.AddTransient<IRepository<Restaurant>, RestaurantRepository>();
-            services.AddCors(options =>
-            {
-                options.AddPolicy("Any policy", policy =>
-                {
-                    policy.AllowAnyHeader();
-                    policy.AllowAnyMethod();
-                    policy.AllowAnyOrigin();
-                });
-            });
-            services.AddMvc();
+            ServiceConfiguration.Configure(services, Configuration);
+            DependencyResolver.Resolve(services, Configuration);
+            ServiceResolver.Resolve(services);
+            MapperResolver.Resolve(services);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -41,8 +33,7 @@ namespace RestaurantBusiness.Web
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors("Any policy");
-            app.UseMvc();
+            AppConfiguration.Configure(app);
         }
     }
 }

@@ -4,10 +4,17 @@
     <input type="text" [(ngModel)]="newRestaurant.name">
 
     <label for="newRestaurant.address">Address</label>
-    <input type="text" [(ngModel)]="newRestaurant.address">
-
-    <label for="newRestaurant.country">Country</label>
-    <input type="text" [(ngModel)]="newRestaurant.country">
+    <select [(ngModel)]="newRestaurant.address.id">
+        <option *ngFor="let a of addresses" [ngValue]="a.id">{{a.name}} {{a.country}}</option>
+    </select>
+    <button (click)="onOpenAddAddress()">Add new address</button>
+    <div *ngIf="isAddingAddress">
+        <label for="newAddress.name">Address</label>
+        <input type="text" [(ngModel)]="newAddress.name">
+        <label for="newAddress.country">Country</label>
+        <input type="text" [(ngModel)]="newAddress.country">
+        <button (click)="onCreateAddress()">Add address</button>
+    </div>
 
     <button (click)="onCreateRestaurant()">Create restaurant</button>
 </div>
