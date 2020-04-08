@@ -27,17 +27,18 @@ namespace RestaurantBusiness.DAL.Repositories
             await _addressContainer.CreateItemAsync(item);
         }
 
-        public async Task CreateSeveralItems(IEnumerable<Address> items)
+        public async Task CreateSeveralItemsAsync(IEnumerable<Address> items)
         {
-            foreach(var item in items)
+            await Task.WhenAll(items.Select(async address =>
             {
-                await _addressContainer.CreateItemAsync(item, new PartitionKey(item.Country));
-            }
+                await _addressContainer.CreateItemAsync(address);
+            }));
         }
 
-        public async Task<IEnumerable<Address>> GetAllItemsAsync(Expression<Func<Address, bool>> filter)
+        public async Task<IEnumerable<Address>> GetAllItemsAsync(Expression<Func<Address, bool>> filter = null)
         {
             var addressQueryable = _addressContainer.GetItemLinqQueryable<Address>().AsQueryable();
+
             if(filter != null)
             {
                 addressQueryable = addressQueryable.Where(filter);
@@ -49,9 +50,9 @@ namespace RestaurantBusiness.DAL.Repositories
             return addresses;
         }
 
-        public async Task<Address> GetItemAsync(string id)
+        public async Task<Address> GetItemAsync(string id, string partitionKey)
         {
-            return await _addressContainer.ReadItemAsync<Address>(id, new PartitionKey("/Ukraine"));
+            return await _addressContainer.ReadItemAsync<Address>(id, new PartitionKey(partitionKey));
         }
     }
 }

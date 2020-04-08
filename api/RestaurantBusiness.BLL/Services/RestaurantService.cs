@@ -4,8 +4,10 @@ using RestaurantBusiness.BLL.Interfaces;
 using RestaurantBusiness.DAL.Interfaces;
 using RestaurantBusiness.Domain.Models;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Collections.Concurrent;
 
 namespace RestaurantBusiness.BLL.Services
 {
@@ -34,35 +36,35 @@ namespace RestaurantBusiness.BLL.Services
             restaurant.Id = Guid.NewGuid().ToString();
             await _restaurantRepository.CreateItemAsync(restaurant);
 
-            foreach(var food in restaurantDto.Menu)
+            await Task.WhenAll(restaurantDto.Menu.Select(async food =>
             {
                 food.RestaurantId = restaurant.Id;
                 await _foodRepository.CreateItemAsync(food);
-            }
+            }));
         }
 
         public async Task<RestaurantDto> GetRestaurant(string id)
         {
-            var restaurant = await _restaurantRepository.GetItemAsync(id);
+            var restaurant = await _restaurantRepository.GetItemAsync(id, "");
             var restaurantDto = _mapper.Map<RestaurantDto>(restaurant);
+
+            var a = GetRestaurants("Ukraine");
 
             return restaurantDto;
         }
 
-        public async Task<IEnumerable<RestaurantDto>> GetRestaurants()
+        public async Task<IEnumerable<RestaurantDto>> GetRestaurants(string country)
         {
-            var restaurants = await _restaurantRepository.GetAllItemsAsync(null);
-            var restaurantDtos = new List<RestaurantDto>();
-            foreach(var restaurant in restaurants)
+            var restaurants = await _restaurantRepository.GetAllItemsAsync();
+
+            return await Task.WhenAll(restaurants.Select(async restaurant => 
             {
                 var restaurantDto = _mapper.Map<RestaurantDto>(restaurant);
                 restaurantDto.Menu = new List<Food>();
                 restaurantDto.Menu.AddRange(await _foodRepository.GetAllItemsAsync(f => f.RestaurantId == restaurant.Id));
-                restaurantDto.Address = await _addressRepository.GetItemAsync(restaurant.AddressId);
-                restaurantDtos.Add(restaurantDto);
-            }
-
-            return restaurantDtos;
+                restaurantDto.Address = await _addressRepository.GetItemAsync(restaurant.AddressId, country);
+                return restaurantDto;
+            }));
         }
     }
 }

@@ -22,7 +22,7 @@ namespace RestaurantBusiness.BLL.Services
 
         public async Task<IEnumerable<Address>> GetAllAddresses()
         {
-            return await _addressRepository.GetAllItemsAsync(null);
+            return await _addressRepository.GetAllItemsAsync();
         }
     }
 }

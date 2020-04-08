@@ -12,8 +12,8 @@ export class RestaurantService {
     constructor(private httpClient: HttpClient) {
     }
 
-    public getAllRestaurants(): Observable<Restaurant[]> {
-        return this.httpClient.get<Restaurant[]>(ApiSettings.API_ROOT_PATH + ApiSettings.RESTAURANT_PATH);
+    public getAllRestaurants(country: string): Observable<Restaurant[]> {
+        return this.httpClient.get<Restaurant[]>(ApiSettings.API_ROOT_PATH + ApiSettings.RESTAURANT_PATH + country);
     }
 
     public postRestaurant(restaurant: Restaurant) {

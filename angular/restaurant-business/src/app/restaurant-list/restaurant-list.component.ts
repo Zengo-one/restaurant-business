@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class RestaurantListComponent implements OnInit {
   public restaurants: Restaurant[];
+  public country: string;
 
   constructor(
     private restaurantService: RestaurantService,
@@ -17,7 +18,8 @@ export class RestaurantListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.restaurantService.getAllRestaurants().subscribe(
+    this.country = "Ukraine";
+    this.restaurantService.getAllRestaurants(this.country).subscribe(
       restaurants => this.restaurants = restaurants
       );
   }

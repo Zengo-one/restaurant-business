@@ -24,7 +24,7 @@ namespace RestaurantBusiness.Web.Controllers
             return Ok();
         }
 
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetRestaurant(string id)
         {
             var restaurant = await _restaurantService.GetRestaurant(id);
@@ -32,10 +32,10 @@ namespace RestaurantBusiness.Web.Controllers
             return Ok(restaurant);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllRestaurants()
+        [HttpGet("{country}")]
+        public async Task<IActionResult> GetAllRestaurants(string country)
         {
-            var restaurants = await _restaurantService.GetRestaurants();
+            var restaurants = await _restaurantService.GetRestaurants(country);
 
             return Ok(restaurants);
         }

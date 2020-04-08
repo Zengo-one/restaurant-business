@@ -9,10 +9,10 @@ namespace RestaurantBusiness.DAL.Interfaces
     {
         Task CreateItemAsync(TItem item);
 
-        Task CreateSeveralItems(IEnumerable<TItem> items);
+        Task CreateSeveralItemsAsync(IEnumerable<TItem> items);
 
-        Task<TItem> GetItemAsync(string id);
+        Task<TItem> GetItemAsync(string id, string partitionKey);
 
-        Task<IEnumerable<TItem>> GetAllItemsAsync(Expression<Func<TItem, bool>> filter);
+        Task<IEnumerable<TItem>> GetAllItemsAsync(Expression<Func<TItem, bool>> filter = null);
     }
 }

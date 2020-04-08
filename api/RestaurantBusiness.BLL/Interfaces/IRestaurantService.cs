@@ -10,6 +10,6 @@ namespace RestaurantBusiness.BLL.Interfaces
 
         Task CreateRestaurant(RestaurantDto restaurantDto);
 
-        Task<IEnumerable<RestaurantDto>> GetRestaurants();
+        Task<IEnumerable<RestaurantDto>> GetRestaurants(string country);
     }
 }

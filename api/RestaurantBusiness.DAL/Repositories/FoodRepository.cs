@@ -27,17 +27,18 @@ namespace RestaurantBusiness.DAL.Repositories
             await _foodContainer.CreateItemAsync(item);
         }
 
-        public async Task CreateSeveralItems(IEnumerable<Food> items)
+        public async Task CreateSeveralItemsAsync(IEnumerable<Food> items)
         {
-            foreach(var item in items)
+            await Task.WhenAll(items.Select(async food =>
             {
-                await _foodContainer.CreateItemAsync(item);
-            }
+                await _foodContainer.CreateItemAsync(food);
+            }));
         }
 
-        public async Task<IEnumerable<Food>> GetAllItemsAsync(Expression<Func<Food, bool>> filter)
+        public async Task<IEnumerable<Food>> GetAllItemsAsync(Expression<Func<Food, bool>> filter = null)
         {
             var foodQueryable = _foodContainer.GetItemLinqQueryable<Food>().AsQueryable();
+
             if(filter != null)
             {
                 foodQueryable = foodQueryable.Where(filter);
@@ -49,9 +50,9 @@ namespace RestaurantBusiness.DAL.Repositories
             return restaurants;
         }
 
-        public async Task<Food> GetItemAsync(string id)
+        public async Task<Food> GetItemAsync(string id, string partitionKey)
         {
-            return await _foodContainer.ReadItemAsync<Food>(id, new PartitionKey("/RestaurantId"));
+            return await _foodContainer.ReadItemAsync<Food>(id, new PartitionKey(partitionKey));
         }
     }
 }
