@@ -14,15 +14,11 @@ namespace RestaurantBusiness.DAL.Repositories
 {
     public class AddressRepository : IRepository<Address>
     {
-        private readonly CosmosClient _client;
-        private readonly Database _database;
         private readonly Container _addressContainer;
 
-        public AddressRepository(IOptions<CosmosDbSettings> settings)
+        public AddressRepository(CosmosClient client, IOptions<CosmosDatabaseSettings> settings)
         {
-            _client = new CosmosClient(settings.Value.EndpointUri, settings.Value.PrimaryKey);
-            _database = _client.GetDatabase(settings.Value.DatabaseId);
-            _addressContainer = _database.GetContainer("addresses");
+            _addressContainer = client.GetContainer(settings.Value.DatabaseId, "addresses");
         }
 
         public async Task CreateItemAsync(Address item)
@@ -55,7 +51,7 @@ namespace RestaurantBusiness.DAL.Repositories
 
         public async Task<Address> GetItemAsync(string id)
         {
-            return await _addressContainer.ReadItemAsync<Address>(id, new PartitionKey("Ukraine"));
+            return await _addressContainer.ReadItemAsync<Address>(id, new PartitionKey("/Ukraine"));
         }
     }
 }

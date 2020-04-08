@@ -21,7 +21,7 @@ namespace RestaurantBusiness.Web
         public void ConfigureServices(IServiceCollection services)
         {
             ServiceConfiguration.Configure(services, Configuration);
-            DependencyResolver.Resolve(services);
+            DependencyResolver.Resolve(services, Configuration);
             ServiceResolver.Resolve(services);
             MapperResolver.Resolve(services);
         }

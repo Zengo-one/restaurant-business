@@ -14,15 +14,11 @@ namespace RestaurantBusiness.DAL.Repositories
 {
     public class FoodRepository : IRepository<Food>
     {
-        private readonly CosmosClient _client;
-        private readonly Database _database;
         private readonly Container _foodContainer;
 
-        public FoodRepository(IOptions<CosmosDbSettings> settings)
+        public FoodRepository(CosmosClient client, IOptions<CosmosDatabaseSettings> settings)
         {
-            _client = new CosmosClient(settings.Value.EndpointUri, settings.Value.PrimaryKey);
-            _database = _client.GetDatabase(settings.Value.DatabaseId);
-            _foodContainer = _database.GetContainer("foods");
+            _foodContainer = client.GetContainer(settings.Value.DatabaseId, "foods");
         }
 
         public async Task CreateItemAsync(Food item)

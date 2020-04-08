@@ -8,7 +8,8 @@ namespace RestaurantBusiness.Infrastructure.Configuration
     {
         public static void Configure(IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<CosmosDbSettings>(configuration.GetSection(nameof(CosmosDbSettings)));
+            services.Configure<CosmosDatabaseSettings>(configuration.GetSection(nameof(CosmosDatabaseSettings)));
+            services.Configure<CosmosClientSettings>(configuration.GetSection(nameof(CosmosClientSettings)));
         }
     }
 }
