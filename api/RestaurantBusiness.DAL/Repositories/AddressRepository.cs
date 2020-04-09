@@ -18,7 +18,7 @@ namespace RestaurantBusiness.DAL.Repositories
 
         public AddressRepository(CosmosClient client, IOptions<CosmosDatabaseSettings> settings)
         {
-            _addressContainer = client.GetContainer(settings.Value.DatabaseId, "addresses");
+            _addressContainer = client.GetContainer(settings.Value.CosmosDbDatabaseId, "addresses");
         }
 
         public async Task CreateItemAsync(Address item)
