@@ -18,7 +18,7 @@ namespace RestaurantBusiness.DAL.Repositories
 
         public RestaurantRepository(CosmosClient client, IOptions<CosmosDatabaseSettings> settings)
         {
-            _restaurantsContainer = client.GetContainer(settings.Value.DatabaseId, "restaurants");
+            _restaurantsContainer = client.GetContainer(settings.Value.CosmosDbDatabaseId, "restaurants");
         }
 
         public async Task CreateItemAsync(Restaurant item)

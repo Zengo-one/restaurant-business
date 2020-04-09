@@ -1,7 +1,6 @@
 ﻿using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Fluent;
 using Microsoft.Extensions.Configuration;
-using RestaurantBusiness.Domain.DatabaseConfiguration;
 
 namespace RestaurantBusiness.Infrastructure.CosmosDb
 {
@@ -9,8 +8,11 @@ namespace RestaurantBusiness.Infrastructure.CosmosDb
     {
         public static CosmosClient BuildClient(IConfiguration configuration)
         {
-            var cosmosSettings = configuration.GetSection(nameof(CosmosClientSettings)).Get<CosmosClientSettings>();
-            CosmosClientBuilder clientBuilder = new CosmosClientBuilder(cosmosSettings.EndpointUri, cosmosSettings.PrimaryKey);
+            string endpointUri = configuration["CosmosDbEndpointUri"];
+            string primaryKey = configuration["CosmosDbPrimaryKey"];
+
+            CosmosClientBuilder clientBuilder = new CosmosClientBuilder(
+                endpointUri, primaryKey);
             CosmosClient client = clientBuilder
                                 .WithConnectionModeDirect()
                                 .Build();
