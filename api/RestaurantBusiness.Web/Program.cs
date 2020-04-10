@@ -14,11 +14,14 @@ namespace RestaurantBusiness.Web
             CreateWebHostBuilder(args).Build().Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        {
+            var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+            var keyVaultEndpoint = configuration.GetSection("KeyVaultEndpoint").Value;
+
+            var webHostBuilder = WebHost.CreateDefaultBuilder(args)
             .ConfigureAppConfiguration((context, config) =>
             {
-                var keyVaultEndpoint = GetKeyVaultEndpoint();
                 if (!string.IsNullOrEmpty(keyVaultEndpoint))
                 {
                     var azureServiceTokenProvider = new AzureServiceTokenProvider();
@@ -29,6 +32,7 @@ namespace RestaurantBusiness.Web
                 }
             }).UseStartup<Startup>();
 
-        public static string GetKeyVaultEndpoint() => "https://keyvaulttestnixnew.vault.azure.net/";
+            return webHostBuilder;
+        }
     }
 }
